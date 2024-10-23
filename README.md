@@ -15,7 +15,7 @@ Once you have your Swift package set up, adding `DGGrowingTextView` as a depende
 
 ```
 dependencies: [
-   .package(url: "https://github.com/donggyushin/DGGrowingTextView.git", .upToNextMajor(from: "1.1.0"))
+   .package(url: "https://github.com/donggyushin/DGGrowingTextView.git", .upToNextMajor(from: "1.1.1"))
 ]
 ```
 
@@ -32,17 +32,17 @@ private struct ExpandingTextViewPreview: View {
     @State private var text: String = "@Nickname "
     let textView: DGTextView = {
         let view = DGTextView(
-                     font: .systemFont(ofSize: 30),
-                     lineHeight: 50,
-                     textColor: .white,
-                     tintColor: nil,
-                     mension: "Nickname"
-                     )
+            font: .systemFont(ofSize: 30),
+            lineHeight: 50,
+            textColor: .white,
+            tintColor: nil,
+            mension: "Nickname"
+        )
         return view
     }()
     
     var body: some View {
-        ExpandingTextView(
+        DGGrowingTextView(
             text: $text,
             placeholder: nil,
             placeholderTextColor: nil,
@@ -52,6 +52,7 @@ private struct ExpandingTextViewPreview: View {
         )
     }
 }
+
 ```
 
 <img src="https://github.com/user-attachments/assets/95378a87-d448-4cc1-8f14-0d96b7b00820" width=300 />

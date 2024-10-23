@@ -3,7 +3,12 @@
 
 import SwiftUI
 import UIKit
-import Proton
+
+public extension NSAttributedString {
+    var fullRange: NSRange {
+        return NSRange(location: 0, length: length)
+    }
+}
 
 open class DGTextView: UITextView, UITextViewDelegate {
     
@@ -130,7 +135,7 @@ struct WrappedTextView: UIViewRepresentable {
     }
 }
 
-public struct ExpandingTextView: View {
+public struct DGGrowingTextView: View {
     @Binding var text: String
     
     @State private var height: CGFloat?
@@ -190,12 +195,18 @@ private struct ExpandingTextViewPreview: View {
     
     @State private var text: String = "@Nickname "
     let textView: DGTextView = {
-        let view = DGTextView(font: .systemFont(ofSize: 30), lineHeight: 50, textColor: .white, tintColor: nil, mension: "Nickname")
+        let view = DGTextView(
+            font: .systemFont(ofSize: 30),
+            lineHeight: 50,
+            textColor: .white,
+            tintColor: nil,
+            mension: "Nickname"
+        )
         return view
     }()
     
     var body: some View {
-        ExpandingTextView(
+        DGGrowingTextView(
             text: $text,
             placeholder: nil,
             placeholderTextColor: nil,

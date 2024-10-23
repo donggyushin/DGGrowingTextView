@@ -31,7 +31,13 @@ private struct ExpandingTextViewPreview: View {
     
     @State private var text: String = "@Nickname "
     let textView: DGTextView = {
-        let view = DGTextView(font: .systemFont(ofSize: 30), lineHeight: 50, textColor: .white, tintColor: nil, mension: "Nickname")
+        let view = DGTextView(
+                     font: .systemFont(ofSize: 30),
+                     lineHeight: 50,
+                     textColor: .white,
+                     tintColor: nil,
+                     mension: "Nickname"
+                     )
         return view
     }()
     

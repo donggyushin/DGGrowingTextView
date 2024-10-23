@@ -17,7 +17,7 @@ open class DGTextView: UITextView, UITextViewDelegate {
     let _textColor: UIColor?
     let _tintColor: UIColor?
     let _mentionForegroundColor: UIColor
-    let _mension: String?
+    let _mention: String?
     
     public init(
         font: UIFont? = nil,
@@ -25,7 +25,7 @@ open class DGTextView: UITextView, UITextViewDelegate {
         textColor: UIColor? = nil,
         tintColor: UIColor? = nil,
         mentionForegroundColor: UIColor = .gray,
-        mension: String? = nil
+        mention: String? = nil
     ) {
         _font = font
         _lineHeight = lineHeight
@@ -33,14 +33,14 @@ open class DGTextView: UITextView, UITextViewDelegate {
         _tintColor = tintColor
         _mentionForegroundColor = mentionForegroundColor
         
-        if let mension {
-            if mension.contains("@") {
-                _mension = mension
+        if let mention {
+            if mention.contains("@") {
+                _mention = mention
             } else {
-                _mension = "@\(mension)"
+                _mention = "@\(mention)"
             }
         } else {
-            _mension = nil
+            _mention = nil
         }
         
         super.init(frame: .zero, textContainer: nil)
@@ -73,7 +73,7 @@ open class DGTextView: UITextView, UITextViewDelegate {
             attrString.addAttribute(.foregroundColor, value: textColor, range: attrString.fullRange)
         }
         
-        if let mention = extractMention(from: text), mention == _mension {
+        if let mention = extractMention(from: text), mention == _mention {
             let nsstring = text as NSString
             attrString.addAttribute(.foregroundColor, value: _mentionForegroundColor, range: nsstring.range(of: mention))
         }
@@ -200,7 +200,7 @@ private struct ExpandingTextViewPreview: View {
             lineHeight: 50,
             textColor: .white,
             tintColor: nil,
-            mension: "Nickname"
+            mention: "Nickname"
         )
         return view
     }()

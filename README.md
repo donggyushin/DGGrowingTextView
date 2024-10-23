@@ -1,6 +1,10 @@
 # DGGrowingTextView
 Provides a SwiftUI multi-line TextView implementation including support for auto-sizing. (iOS)
 
+Supports custom font, lineHeight feature.
+
+Also supports very simple mention effect very easily.
+
 ## Installation
 
 ### Swift Package Manager
@@ -11,7 +15,7 @@ Once you have your Swift package set up, adding `DGGrowingTextView` as a depende
 
 ```
 dependencies: [
-   .package(url: "https://github.com/donggyushin/DGGrowingTextView.git", .upToNextMajor(from: "1.0.0"))
+   .package(url: "https://github.com/donggyushin/DGGrowingTextView.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
@@ -23,13 +27,25 @@ Normally you'll want to depend on the DGGrowingTextView target:
 
 ## Usage
 ```swift
-DGGrowingTextView(
+private struct ExpandingTextViewPreview: View {
+    
+    @State private var text: String = "@Nickname "
+    let textView: DGTextView = {
+        let view = DGTextView(font: .systemFont(ofSize: 30), lineHeight: 50, textColor: .white, tintColor: nil, mension: "Nickname")
+        return view
+    }()
+    
+    var body: some View {
+        ExpandingTextView(
             text: $text,
-            placeholder: "placeholder",
-            minHeight: 21,
-            maxHeight: 84,
-            font: .pretendard(.regular, size: 15),
-            lineHeight: 21,
-            textColor: .red
+            placeholder: nil,
+            placeholderTextColor: nil,
+            minHeight: 30,
+            maxHeight: 150,
+            textView: textView
         )
+    }
+}
 ```
+
+<img src="https://github.com/user-attachments/assets/95378a87-d448-4cc1-8f14-0d96b7b00820" width=300 />

@@ -48,6 +48,7 @@ open class DGTextView: UITextView, UITextViewDelegate {
         isEditable = true
         backgroundColor = .clear
         self.tintColor = tintColor
+        textContainerInset = .zero
     }
     
     public required init?(coder: NSCoder) {

@@ -15,7 +15,7 @@ Once you have your Swift package set up, adding `DGGrowingTextView` as a depende
 
 ```
 dependencies: [
-   .package(url: "https://github.com/donggyushin/DGGrowingTextView.git", .upToNextMajor(from: "1.1.2"))
+   .package(url: "https://github.com/donggyushin/DGGrowingTextView.git", .upToNextMajor(from: "1.1.3"))
 ]
 ```
 

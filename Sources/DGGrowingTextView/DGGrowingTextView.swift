@@ -142,15 +142,17 @@ public struct DGGrowingTextView: View {
     @State private var height: CGFloat?
     
     let placeholder: String?
-    let placeholderTextColor: UIColor?
+    let placeholderTextColor: UIColor
     let minHeight: CGFloat
     let maxHeight: CGFloat
     let textView: DGTextView
     
+    let textViewForPlaceholder: DGTextView
+    
     public init(
         text: Binding<String>,
         placeholder: String? = nil,
-        placeholderTextColor: UIColor? = .gray,
+        placeholderTextColor: UIColor = .gray,
         minHeight: CGFloat = 150,
         maxHeight: CGFloat = 1000,
         textView: DGTextView
@@ -161,6 +163,13 @@ public struct DGGrowingTextView: View {
         self.minHeight = minHeight
         self.maxHeight = maxHeight
         self.textView = textView
+        
+        textViewForPlaceholder = .init(
+            font: textView._font,
+            lineHeight: textView._lineHeight,
+            textColor: placeholderTextColor,
+            tintColor: nil
+        )
     }
 
     public var body: some View {
@@ -175,8 +184,8 @@ public struct DGGrowingTextView: View {
             if text.isEmpty, let placeholder {
                 WrappedTextView(
                     text: .constant(placeholder),
-                    textView: textView,
-                    textDidChange: { _ in }
+                    textView: textViewForPlaceholder,
+                    textDidChange: self.textDidChange
                 )
                 .frame(height: height ?? minHeight)
                 .disabled(true)
@@ -194,7 +203,7 @@ public struct DGGrowingTextView: View {
 
 private struct ExpandingTextViewPreview: View {
     
-    @State private var text: String = "@Nickname "
+    @State private var text: String = ""
     let textView: DGTextView = {
         let view = DGTextView(
             font: .systemFont(ofSize: 30),
@@ -209,8 +218,7 @@ private struct ExpandingTextViewPreview: View {
     var body: some View {
         DGGrowingTextView(
             text: $text,
-            placeholder: nil,
-            placeholderTextColor: nil,
+            placeholder: "Hello World",
             minHeight: 30,
             maxHeight: 150,
             textView: textView

@@ -27,6 +27,7 @@ open class DGTextView: UITextView, UITextViewDelegate {
         mentionForegroundColor: UIColor = .gray,
         mention: String? = nil
     ) {
+        
         _font = font
         _lineHeight = lineHeight
         _textColor = textColor
@@ -44,7 +45,7 @@ open class DGTextView: UITextView, UITextViewDelegate {
         }
         
         super.init(frame: .zero, textContainer: nil)
-        
+        self.font = font
         isEditable = true
         backgroundColor = .clear
         self.tintColor = tintColor
@@ -206,8 +207,8 @@ private struct ExpandingTextViewPreview: View {
     @State private var text: String = ""
     let textView: DGTextView = {
         let view = DGTextView(
-            font: .systemFont(ofSize: 30),
-            lineHeight: 50,
+            font: .systemFont(ofSize: 15),
+            lineHeight: 20,
             textColor: .white,
             tintColor: nil,
             mention: "Nickname"
@@ -223,6 +224,9 @@ private struct ExpandingTextViewPreview: View {
             maxHeight: 150,
             textView: textView
         )
+        .onAppear {
+            textView.becomeFirstResponder()
+        }
     }
 }
 

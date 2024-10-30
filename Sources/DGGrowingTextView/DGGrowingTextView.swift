@@ -19,13 +19,18 @@ open class DGTextView: UITextView, UITextViewDelegate {
     let _mentionForegroundColor: UIColor
     let _mention: String?
     
+    let _textViewDidBeginEditing: ((UITextView) -> Void)?
+    let _textViewDidEndEditing: ((UITextView) -> Void)?
+    
     public init(
         font: UIFont? = nil,
         lineHeight: CGFloat? = nil,
         textColor: UIColor? = nil,
         tintColor: UIColor? = nil,
         mentionForegroundColor: UIColor = .gray,
-        mention: String? = nil
+        mention: String? = nil,
+        textViewDidBeginEditing: ((UITextView) -> Void)? = nil,
+        textViewDidEndEditing: ((UITextView) -> Void)? = nil
     ) {
         
         _font = font
@@ -33,6 +38,8 @@ open class DGTextView: UITextView, UITextViewDelegate {
         _textColor = textColor
         _tintColor = tintColor
         _mentionForegroundColor = mentionForegroundColor
+        _textViewDidBeginEditing = textViewDidBeginEditing
+        _textViewDidEndEditing = textViewDidEndEditing
         
         if let mention {
             if mention.contains("@") {
@@ -119,20 +126,42 @@ struct WrappedTextView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        return Coordinator(text: $text, textDidChange: textDidChange)
+        return Coordinator(
+            text: $text,
+            textDidChange: textDidChange,
+            textDidBeginEditing: textView._textViewDidBeginEditing,
+            textViewDidEndEditing: textView._textViewDidEndEditing
+        )
     }
 
     class Coordinator: NSObject, UITextViewDelegate {
         @Binding var text: String
         let textDidChange: (UITextView) -> Void
+        let textDidBeginEditing: ((UITextView) -> Void)?
+        let textViewDidEndEditing: ((UITextView) -> Void)?
 
-        init(text: Binding<String>, textDidChange: @escaping (UITextView) -> Void) {
+        init(
+            text: Binding<String>,
+            textDidChange: @escaping (UITextView) -> Void,
+            textDidBeginEditing: ((UITextView) -> Void)?,
+            textViewDidEndEditing: ((UITextView) -> Void)?
+        ) {
             self._text = text
             self.textDidChange = textDidChange
+            self.textDidBeginEditing = textDidBeginEditing
+            self.textViewDidEndEditing = textViewDidEndEditing
         }
 
         func textViewDidChange(_ textView: UITextView) {
             self.text = textView.text
+        }
+        
+        func textViewDidBeginEditing(_ textView: UITextView) {
+            textDidBeginEditing?(textView)
+        }
+        
+        func textViewDidEndEditing(_ textView: UITextView) {
+            textViewDidEndEditing?(textView)
         }
     }
 }
